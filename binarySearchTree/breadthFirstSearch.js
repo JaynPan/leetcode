@@ -28,8 +28,28 @@ class Search extends BinarySearchTree {
     return list;
   }
 
-  depthFistSearch() {
+  breadthFistSearchRecursive() {
+    const helper = (queue, list) => {
+      if(queue.length === 0) {
+        return list;
+      }
 
+      const currentNode = queue.shift();
+
+      list.push(currentNode.value);
+      
+      if(currentNode.left !== null) {
+        queue.push(currentNode.left);
+      }
+      
+      if(currentNode.right !== null) {
+        queue.push(currentNode.right);
+      }
+
+      return helper(queue, list);
+    }
+
+    return helper([this.root], []);
   }
 }
 
@@ -46,4 +66,5 @@ tree.insert(1)
 //  4     20
 //1  6  15  170
 
-console.log(tree.breadthFirstSearch());
+console.log('iterative', tree.breadthFirstSearch());
+console.log('recursive', tree.breadthFistSearchRecursive());
