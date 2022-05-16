@@ -51,6 +51,31 @@ class Search extends BinarySearchTree {
 
     return helper([this.root], []);
   }
+
+  dfsInOrder() {
+    const list = [];
+
+    const traverseInOrder = (node) => {
+      if(node.left !== null) {
+        traverseInOrder(node.left);
+      }
+
+      list.push(node.value);
+
+      if(node.right !== null) {
+        traverseInOrder(node.right);
+      }
+    }
+
+    traverseInOrder(this.root);
+    return list;
+  }
+
+  dfsPreOrder() {}
+
+  dfsPostOrder() {
+
+  }
 }
 
 const tree = new Search();
@@ -68,3 +93,4 @@ tree.insert(1)
 
 console.log('iterative', tree.breadthFirstSearch());
 console.log('recursive', tree.breadthFistSearchRecursive());
+console.log('dfsInOrder', tree.dfsInOrder());
