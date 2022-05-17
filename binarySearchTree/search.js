@@ -1,5 +1,8 @@
 import { BinarySearchTree, traverse } from './binarySearchTree.js'
 
+// DFS space complexity is O(H), H is the BTS height
+// BFS space complexity is O(N), N is tree node amount
+
 class Search extends BinarySearchTree {
   constructor(props) {
     super(props)
@@ -71,10 +74,42 @@ class Search extends BinarySearchTree {
     return list;
   }
 
-  dfsPreOrder() {}
+  dfsPreOrder() {
+    const list = [];
+    
+    const traversePreOrder = (node) => {
+      list.push(node.value);
+
+      if(node.left !== null) {
+        traversePreOrder(node.left);
+      }
+
+      if(node.right !== null) {
+        traversePreOrder(node.right);
+      }
+    }
+
+    traversePreOrder(this.root);
+    return list;
+  }
 
   dfsPostOrder() {
+    const list = [];
 
+    const traversePostOrder = (node) => {
+      if (node.left) {
+        traversePostOrder(node.left)
+      }
+
+      if(node.right) {
+        traversePostOrder(node.right)
+      }
+
+      list.push(node.value);
+    }
+
+    traversePostOrder(this.root);
+    return list;
   }
 }
 
@@ -93,4 +128,6 @@ tree.insert(1)
 
 console.log('iterative', tree.breadthFirstSearch());
 console.log('recursive', tree.breadthFistSearchRecursive());
-console.log('dfsInOrder', tree.dfsInOrder());
+console.log('dfsInOrder', tree.dfsInOrder()); // 1 4 6 9 15 20 170
+console.log('dfsPreOrder', tree.dfsPreOrder()); // 9 4 1 6 20 15 170
+console.log('dfsPostOrder', tree.dfsPostOrder()); // 1 6 4 15 170 20 9
