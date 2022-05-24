@@ -111,6 +111,22 @@ class Search extends BinarySearchTree {
     traversePostOrder(this.root);
     return list;
   }
+
+  findSuccessor(p) {
+    let successor = null;
+    let root = this.root;
+      
+    while(root !== null) {
+        if(root.value <= p) {
+            root = root.right;
+        } else {
+            successor = root;
+            root = root.left;
+        }
+    }
+    
+    return successor;
+  };
 }
 
 const tree = new Search();
@@ -131,3 +147,4 @@ console.log('recursive', tree.breadthFistSearchRecursive());
 console.log('dfsInOrder', tree.dfsInOrder()); // 1 4 6 9 15 20 170
 console.log('dfsPreOrder', tree.dfsPreOrder()); // 9 4 1 6 20 15 170
 console.log('dfsPostOrder', tree.dfsPostOrder()); // 1 6 4 15 170 20 9
+console.log('findSuccessor', tree.findSuccessor(20)); // 170

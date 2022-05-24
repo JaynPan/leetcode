@@ -10,7 +10,28 @@
  * @param {TreeNode} p
  * @return {TreeNode}
  */
+
+// * For a balanced BST the time complexity is O(logN), and Space is O(1)
 var inorderSuccessor = function(root, p) {
+  let successor = null;
+    
+  while(root !== null) {
+      if(root.val <= p.val) {
+          root = root.right;
+      } else {
+          successor = root;
+          root = root.left;
+      }
+  }
+  
+  return successor;
+};
+
+
+// Time: O(N), N is node amount
+// Space: O(S), S is the tree heigh
+// ! Using DFS in order algorithm doesn't leverage the BST properties
+var inorderSuccessorDFS = function(root, p) {
   const list = [];
   let targetIdx = null;
 
