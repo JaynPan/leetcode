@@ -45,7 +45,28 @@ var lengthOfLongestSubstring = function(s) {
   return longestSubstring;
 };
 
+// we can record the duplicated index,
+// once find duplicated, jump to the duplicated index + 1
+var lengthOfLongestSubstringOptimized = function(s) {
+  let longestSubstring = 0;
+  let left = 0;
+  const map = {};
+  
+  for (let right = 0; right < s.length; right +=1) {
+    const rightVal = s.charAt(right);
+    const index = map[rightVal];
+
+    if(index !== null && left <= index && index < right) {
+      left = index + 1;
+    }
+    
+    longestSubstring = Math.max(longestSubstring, right - left + 1);
+    map[rightVal] = right;
+  }
+  
+  return longestSubstring;
+}
 
 const s = "abcabcbb"; // abc 3
 const s1 = "pwwkew" // kew 3
-console.log(lengthOfLongestSubstring(s));
+console.log(lengthOfLongestSubstringOptimized(s1));
