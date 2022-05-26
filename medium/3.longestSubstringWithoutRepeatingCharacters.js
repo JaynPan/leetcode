@@ -3,6 +3,8 @@
  * @return {number}
  */
 
+// * Can start from easy 643.
+
 // Use sliding window algorithm may be a great idea
 // in this approach, we need two pointers
 // right pointer to extends the window and left pointer contract the window
