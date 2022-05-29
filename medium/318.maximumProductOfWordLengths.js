@@ -6,8 +6,7 @@
 // Intuitive approach
 // Time: O(N^2 * L1*L2), N: length of array, L1 & L2: comparing word1 length and word2 length
 // Space: O(1)
-// TODO: Can reduce the L1*L2 comparing function to L1 + L2 with bitmasks
-var maxProduct = function(words) {
+var maxProductBrute = function(words) {
     let result = 0;
 
     for(let i = 0; i < words.length; i++) {
@@ -30,6 +29,37 @@ var maxProduct = function(words) {
     return result;
 };
 
-console.log(maxProduct(["abcw","baz","foo","bar","xtfn","abcdef"])); // 16 "abcw", "xtfn".
-console.log(maxProduct(["a","ab","abc","d","cd","bcd","abcd"])); // 4
-console.log(maxProduct(["a","aa","aaa","aaaa"])); // 0
+
+// Time: O(N^2 * L1 + L2)
+var maxProductWithBitmask = function(words) {
+  let result = 0;
+
+  for(let i = 0; i < words.length; i++) {
+    for(let j = i + 1; j < words.length; j++) {
+      const noCommentLetter = noCommonLetter(words[i], words[j]);
+
+      if(noCommentLetter) {
+        result = Math.max(result, words[i].length * words[j].length);
+      }
+    }
+  }
+
+  return result;
+};
+
+function noCommonLetter(s1, s2) {
+  let bitmask1 = 0;
+  let bitmask2 = 0;
+
+  for (let j = 0; j < s1.length; j++)
+    bitmask1 |= 1 << (s1.charCodeAt(j) - 97)
+
+  for (let j = 0; j < s2.length; j++)
+    bitmask2 |= 1 << (s2.charCodeAt(j) - 97)
+
+  return (bitmask1 & bitmask2) === 0;
+}
+
+console.log(maxProductWithBitmask(["abcw","baz","foo","bar","xtfn","abcdef"])); // 16 "abcw", "xtfn".
+console.log(maxProductWithBitmask(["a","ab","abc","d","cd","bcd","abcd"])); // 4
+console.log(maxProductWithBitmask(["a","aa","aaa","aaaa"])); // 0
