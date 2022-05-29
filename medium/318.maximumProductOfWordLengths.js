@@ -32,6 +32,19 @@ var maxProductBrute = function(words) {
 
 // Time: O(N^2 * L1 + L2)
 var maxProductWithBitmask = function(words) {
+  function noCommonLetter(s1, s2) {
+    let bitmask1 = 0;
+    let bitmask2 = 0;
+  
+    for (let j = 0; j < s1.length; j++)
+      bitmask1 |= 1 << (s1.charCodeAt(j) - 97)
+  
+    for (let j = 0; j < s2.length; j++)
+      bitmask2 |= 1 << (s2.charCodeAt(j) - 97)
+  
+    return (bitmask1 & bitmask2) === 0;
+  }
+  
   let result = 0;
 
   for(let i = 0; i < words.length; i++) {
@@ -47,19 +60,32 @@ var maxProductWithBitmask = function(words) {
   return result;
 };
 
-function noCommonLetter(s1, s2) {
-  let bitmask1 = 0;
-  let bitmask2 = 0;
 
-  for (let j = 0; j < s1.length; j++)
-    bitmask1 |= 1 << (s1.charCodeAt(j) - 97)
+// Time: O(N^2 + L) // L: total length of all words
+var maxProductWithBitmaskPreComputation = function(words) {
+  let result = 0;
+  const bitmasks = [];
 
-  for (let j = 0; j < s2.length; j++)
-    bitmask2 |= 1 << (s2.charCodeAt(j) - 97)
+  for(let i = 0; i < words.length; i++) {
+    let bitmask = 0;
 
-  return (bitmask1 & bitmask2) === 0;
-}
+    for(const char of words[i]) 
+      bitmask |= 1 << (char.charCodeAt() - 97);
 
-console.log(maxProductWithBitmask(["abcw","baz","foo","bar","xtfn","abcdef"])); // 16 "abcw", "xtfn".
-console.log(maxProductWithBitmask(["a","ab","abc","d","cd","bcd","abcd"])); // 4
-console.log(maxProductWithBitmask(["a","aa","aaa","aaaa"])); // 0
+    bitmasks.push(bitmask);
+  }
+
+  for(let i = 0; i < words.length; i++) {
+    for(let j = i + 1; j < words.length; j++) {
+      if((bitmasks[i] & bitmasks[j]) === 0) {
+        result = Math.max(result, words[i].length * words[j].length);
+      }
+    }
+  }
+
+  return result;
+};
+
+console.log(maxProductWithBitmaskPreComputation(["abcw","baz","foo","bar","xtfn","abcdef"])); // 16 "abcw", "xtfn".
+console.log(maxProductWithBitmaskPreComputation(["a","ab","abc","d","cd","bcd","abcd"])); // 4
+console.log(maxProductWithBitmaskPreComputation(["a","aa","aaa","aaaa"])); // 0
