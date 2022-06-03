@@ -3,7 +3,11 @@
  * @return {number}
  */
 
-// The bottom-up approach (dynamic programming)
+// Type: Greedy algorithm
+
+// The max profit should always buying at the lowest price and selling at highest price
+// Thus, while iterate through prices, although we don't know the current price is the lowest or highest price
+// but we can compare it with the current min and max price.
 var maxProfit = function(prices) {
   let result = 0;
   let min = prices[0];
