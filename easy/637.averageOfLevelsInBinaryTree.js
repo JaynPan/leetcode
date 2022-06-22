@@ -47,3 +47,25 @@ var averageOfLevels = function(root) {
 
   return result;
 };
+
+// * DFS
+var averageOfLevels = function(root) {
+  const sumList = [];
+  const countList = [];
+  
+  const helper = (node, count) => {
+      sumList[count] = sumList[count] ? sumList[count] + node.val: node.val;
+      countList[count] = countList[count] ? countList[count] + 1 : 1;
+      
+      if(node.left) {
+          helper(node.left, count + 1);
+      }
+      
+      if(node.right) {
+          helper(node.right, count + 1);
+      }
+  }
+  
+  helper(root, 0);
+  return sumList.map((sum, i) => sum / countList[i])
+};
