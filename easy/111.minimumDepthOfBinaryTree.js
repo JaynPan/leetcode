@@ -12,6 +12,11 @@
  */
 
 // * DFS Approach
+// Time: O(N), each node is visited
+
+// Space: O(N) 
+// in the worst case if the tree is unbalanced (each node has only one child). Then the recursion call occurs N times.
+// if it is a balanced tree, then O(logN)
 var minDepth = function(root) {
   if(!root) return 0;
   
@@ -33,4 +38,45 @@ var minDepth = function(root) {
   
   helper(root, 1);
   return minDepth;
+};
+
+// * BFS Approach
+// In DFS, we need to traverse each of the node to get the result, using BFS can speed up the runtime.
+// Since we traverse from the top level to the bottom level, once we find the node is a leaf, then it is the minimum depth
+
+// Time: O(N) in the worst case
+// Space: O(N)
+var minDepth = function(root) {
+  if(!root) return 0
+  
+  let queue = [];
+  let level = 1;
+  
+  queue.push(root);
+  
+  while(queue.length > 0) {
+      let tempQueue = [];
+      
+      while(queue.length > 0) {
+          const currentNode = queue.shift();
+          
+          // it is a leaf
+          if(!currentNode.left && !currentNode.right) {
+              return level;
+          }
+          
+          if(currentNode.left) {
+              tempQueue.push(currentNode.left);
+          }
+      
+          if(currentNode.right) {
+              tempQueue.push(currentNode.right);
+          }
+      }
+      
+      level++;
+      queue = tempQueue;
+  }
+  
+  return level;
 };
