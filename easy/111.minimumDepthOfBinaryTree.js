@@ -42,7 +42,7 @@ var minDepth = function(root) {
 
 // * BFS Approach
 // In DFS, we need to traverse each of the node to get the result, using BFS can speed up the runtime.
-// Since we traverse from the top level to the bottom level, once we find the node is a leaf, then it is the minimum depth
+// Since we traverse from the top level to the bottom level, which means the first leaf we reach corresponds to the minimum depth 
 
 // Time: O(N) in the worst case
 // Space: O(N)
