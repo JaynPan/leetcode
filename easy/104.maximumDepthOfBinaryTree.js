@@ -13,6 +13,7 @@
 
 // Type: DFS
 
+// * recursion with helper function
 var maxDepth = function(root) {
   if(!root) return 0;
   
@@ -35,4 +36,13 @@ var maxDepth = function(root) {
   
   helper(root, 1);
   return max;
+};
+
+// * optimize recursion
+var maxDepth = function(root) {
+  if(!root) {
+      return 0;
+  } else {
+      return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));
+  }
 };
