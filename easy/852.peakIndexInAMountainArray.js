@@ -3,6 +3,8 @@
  * @return {number}
  */
 
+// Type: Binary Search
+
 // O(N)
 var peakIndexInMountainArrayIterative = function(arr) {
   let i = 0;
