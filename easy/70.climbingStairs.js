@@ -17,6 +17,24 @@ var climbStairsRecursive = function(n) {
     return climbStairsRecursive(n - 2) + climbStairsRecursive(n - 1);
 };
 
+// Time: O(N), 
+var climbStairsMemo = function(n) {
+  const cache = {};
+  
+  const helper = (i) => {
+      if(cache[i]) return cache[i];
+      if(i === n) return 1;
+      if(i > n) return 0;
+      
+      
+      const result = helper(i + 1) + helper(i + 2);
+      cache[i] = result;
+      return cache[i];
+  }
+  
+  return helper(0)
+}
+
 var climbStairs = function(n) {
   const waysForEachStairCases = [1,2,3];
 
