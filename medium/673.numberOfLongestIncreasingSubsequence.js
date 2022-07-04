@@ -45,3 +45,43 @@ var findNumberOfLIS = function(nums) {
   
   return result;
 };
+
+// * DP (Optimize first implementation)
+// Time: O(N^2)
+// Space: O(N)
+var findNumberOfLIS = function(nums) {
+    const dp = {};
+    let result = 0;
+    let lenLIS = 0;
+    
+    for(let i = nums.length - 1; i >= 0; i--) {
+        let maxLength = 1;
+        let maxCount = 1;
+        
+        for (let j = i + 1; j < nums.length; j++) {
+            const { length, count } = dp[j];
+  
+            // make sure it is increasing order
+            if (nums[i] < nums[j]) {
+                // adding one value to the subsequence, thus + 1
+                if (length + 1 > maxLength) {
+                    maxLength = length + 1;
+                    maxCount = count;
+                } else if(length + 1 === maxLength) {
+                    maxCount += count;
+                }
+            }
+        }
+        
+        if (maxLength > lenLIS) {
+          lenLIS = maxLength;
+          result = maxCount;
+        } else if (lenLIS === maxLength) {
+          result += maxCount;
+        }
+        
+        dp[i] = { length: maxLength, count: maxCount };
+    }
+  
+    return result;
+  };
