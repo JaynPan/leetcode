@@ -4,7 +4,10 @@
  * @return {number}
  */
 
+// Type: BST, binary search tree
+
 // 解題技巧：既然是 sorted array，可使用 divide and conquer 技巧
+// * Recursion
 var search = function(nums, target) {
   const helper = (start, end) => {
     if(start > end) {
@@ -31,6 +34,25 @@ var search = function(nums, target) {
   return helper(0, nums.length - 1);
 };
 
+// * Two pointer
+var searchTwoPointer = function(nums, target) {
+  let left = 0;
+  let right = nums.length - 1;
+  
+  while(left <= right) {
+      const middle = Math.floor((left + right) / 2);
+
+      if(nums[middle] === target) return middle;
+
+      if(nums[middle] > target) {
+          right = middle - 1;
+      } else if(nums[middle] < target) {
+          left = middle + 1;   
+      }
+  }
+  
+  return -1;
+};
 
 const nums = [-1,0,3,5,9,12, 18]; // target = 9
 
