@@ -37,3 +37,32 @@ var copyRandomList = function(head) {
 
   return helper(head);
 };
+
+// * Two passes
+// Time: O(N)
+// Space: O(N)
+var copyRandomList = function(head) {
+  let currentNode = head;
+  const map = new Map();
+
+  // deep clone each node and store in hash map, without connect the pointer
+  while(currentNode) {
+    const _node = new Node(currentNode.val, null, null);
+    
+    map.set(currentNode, _node);
+    currentNode = currentNode.next;    
+  }
+  
+  currentNode = head;
+  
+  // connect the pointer, since all nodes have a copy in map
+  while(currentNode) {
+    const _node = map.get(currentNode);
+
+    _node.next = map.has(currentNode.next) ? map.get(currentNode.next) : null;
+    _node.random = map.has(currentNode.random) ? map.get(currentNode.random) : null;
+    currentNode = currentNode.next;    
+  }
+    
+  return map.get(head);
+};
