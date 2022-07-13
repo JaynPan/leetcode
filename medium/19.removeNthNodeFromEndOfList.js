@@ -57,7 +57,7 @@ var removeNthFromEnd = function(head, n) {
   return reversedLinkedList(reversed);
 };
 
-// * Two Passes
+// * Two Pass
 // Time: O(2N)
 // Space: O(1)
 var removeNthFromEnd = function(head, n) {
@@ -69,15 +69,15 @@ var removeNthFromEnd = function(head, n) {
     length++;
   }
   
-  let nodeBeforeRemoveIdx = length - n - 1;
+  let nodeBeforeRemoveIdx = length - n;
 
-  if(nodeBeforeRemoveIdx < 0) {
+  if(nodeBeforeRemoveIdx === 0) {
     return head.next;
   }
   
   currentNode = head;
   
-  for(let i = 0; i < nodeBeforeRemoveIdx; i++) {
+  for(let i = 1; i < nodeBeforeRemoveIdx; i++) {
     currentNode = currentNode.next;
   }
   
