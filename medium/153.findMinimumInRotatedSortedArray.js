@@ -29,3 +29,35 @@ var findMin = function(nums) {
   
   return min;
 };
+
+// * optimize first implementation logic
+var findMin = function(nums) {
+  let right = nums.length - 1;
+  let left = 0;
+  let min = nums[0];
+  
+  while(left <= right) {
+    // imaging the first time into the while loop
+    // left: 0, right: nums.length - 1, means the nums is sorted ascending
+    // then the min num is the fist item
+
+    if(nums[left] < nums[right]) {
+      min = Math.min(min, nums[left]);
+      break;
+    }
+
+    const mid = Math.floor((left + right) / 2);
+      
+    min = Math.min(min, nums[mid]);
+
+    // find the sorted portion
+    // if sorted portion is at right-hand side, means the smallest value should at the left portion
+    if(nums[left] <= nums[mid]) {
+      left = mid + 1;
+    } else {
+      right = mid - 1;
+    }
+  }
+  
+  return min;
+};
