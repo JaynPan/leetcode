@@ -3,7 +3,7 @@
  * @return {boolean}
  */
 
-
+// * Intervals
 // Time: O(N * logN)
 // Space: O(1)
 var canAttendMeetings = function(intervals) {
