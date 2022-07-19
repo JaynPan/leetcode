@@ -7,21 +7,24 @@
 // Space: O(N), in the worst case we will push all characters into stack. Thus, O(N)
 var isValid = function(s) {
   const stack = [];
+  const map = {
+    "{": "}",
+    "[": "]",
+    "(": ")"
+  };
   
-  for (let i = 0; i < s.length; i++) {
-      const topStackVal = stack[stack.length - 1];
-
-      if((s[i] === "}" && topStackVal === "{") ||
-         (s[i] === "]" && topStackVal === "[") ||
-         (s[i] === ")" && topStackVal === "(")
-        ) {
-          stack.pop();
-      } else {
-          stack.push(s[i])            
-      }
+  for(let i = 0; i < s.length; i++) {
+    if (map[s[i]]) {
+      stack.push(s[i]);
+      continue;
+    }
+    
+    const topItem = stack.pop();
+    
+    if(map[topItem] !== s[i]) return false;
   }
   
-  return stack.length === 0;
+  return !stack.length;
 };
 
 console.log(isValid("([{}]{})")) // true
