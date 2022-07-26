@@ -3,9 +3,40 @@
  * @return {number}
  */
 
-// * Array
+// * Two pointer
 // Time: O(N)
-// Space: O(N)
+// Space: O(1)
+var trap = function(height) {
+  let leftMax = 0;
+  let rightMax = 0;
+  let amount = 0;
+  let left = 0;
+  let right = height.length - 1;
+  
+  while(left < right) {
+    const leftHeight = height[left];
+    const rightHeight = height[right];
+    
+    leftMax = Math.max(leftMax, leftHeight);
+    rightMax = Math.max(rightMax, rightHeight);
+    
+    if(leftMax <= rightMax) {
+      const trappedRain = Math.min(leftMax, rightMax) - leftHeight;
+      amount += trappedRain > 0 ? trappedRain : 0;
+      left++;
+    } else {
+      const trappedRain = Math.min(leftMax, rightMax) - rightHeight;
+      amount += trappedRain > 0 ? trappedRain : 0;
+      right--;
+    }
+  }
+  
+  return amount;
+};
+
+// * Array
+// Time: O(3N)
+// Space: O(2N)
 var trap = function(height) {
   const leftMax = [0];
   const rightMax = [];
