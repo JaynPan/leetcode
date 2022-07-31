@@ -34,6 +34,17 @@ var rob = function(nums) {
   return memoized(0);
 };
 
+// * DP
+var robDp = function(nums) {  
+  const dp = [nums[0], Math.max(nums[0], nums[1])];
+  
+  for(let i = 2; i < nums.length; i++) {
+    dp[i] = Math.max(nums[i] + dp[i - 2], dp[i - 1]);
+  }
+  
+  return dp[nums.length - 1];
+};
+
 const nums1 = [1,2,3,1]; // 4
 const nums2 = [2,7,9,3,1]; // 12
 const nums3 = [1,2] // 2
