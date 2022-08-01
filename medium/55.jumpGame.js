@@ -3,6 +3,21 @@
  * @return {boolean}
  */
 
+// * Greedy
+// Time: O(N)
+// Space: O(1)
+var canJump = function(nums) {
+  let goalIdx = nums.length - 1;
+  
+  for(let i = nums.length - 2; i >= 0; i--) {
+    if (nums[i] + i >= goalIdx) {
+      goalIdx = i;
+    }
+  }
+  
+  return goalIdx === 0;
+};
+
 // * DP memoization
 // Time: O(N^2), in each recursion, we looping until the maximum step, if the max step is === nums.length, then it is O(N*N)
 // Space: O(N)
