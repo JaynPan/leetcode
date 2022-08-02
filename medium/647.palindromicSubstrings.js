@@ -17,32 +17,22 @@
 // 因此總共會有 "b" "a" "a" "b" "aa" "baab" 總共 6 個 palindromes
 
 var countSubstrings = function(s) {
-  let matchCount = 0;
-  
-  for(let i = 0; i < s.length; i+=1) {
-      // odd palindromes
-      matchCount += findPalindromesFromCenter(i, i);
+    let matchCount = 0;
       
-      // even palindromes
-      matchCount += findPalindromesFromCenter(i, i +1);
-  }
-      
-  function findPalindromesFromCenter(low, high) {
-      let count = 0;
-      
-      while(low >= 0 && high < s.length) {
-          if(s.charAt(low) !== s.charAt(high)) break;
-          
-          low --;
-          high ++;
-          count++;            
+    const findPalindrome = (left, right) => {
+      while (left >= 0 && right < s.length && s.charAt(left) === s.charAt(right)) {
+        matchCount++;
+        left--;
+        right++;
       }
-      
-      return count;
-  }
-  
-  return matchCount;
-
+    }
+    
+    for(let i = 0; i < s.length; i++) {
+      findPalindrome(i, i);
+      findPalindrome(i, i + 1);
+    }
+    
+    return matchCount;
 };
 
 console.log(countSubstrings("abc")) // 3
