@@ -3,6 +3,29 @@
  * @return {number}
  */
 
+// DP (bottom up)
+// Time: O(N)
+// Space: O(N)
+var numDecodings = function(s) {
+  let dp = Array(s.length + 1).fill(1);
+  
+  for(let i = s.length - 1; i >= 0; i--) {
+    if(s[i] === "0") {
+      dp[i] = 0;
+    } else {
+      dp[i] = dp[i + 1];
+    }
+    
+    const twoDigits = (i + 1) < s.length ? Number(s.substring(i, i + 2)) : undefined;
+
+    if(twoDigits && (twoDigits >= 10 && twoDigits <= 26)) {
+      dp[i] += dp[i + 2];
+    }
+  }
+  
+  return dp[0];
+};
+
 // * DP + memoization
 // Time: O(N)
 // Space: O(N)
