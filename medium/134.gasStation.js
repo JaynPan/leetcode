@@ -4,6 +4,35 @@
  * @return {number}
  */
 
+// * Greedy
+// Time: O(N)
+// Space: O(1)
+var canCompleteCircuit = function(gas, cost) {
+  let totalGas = 0;
+  let totalCost = 0;
+  
+  for(let i = 0; i < gas.length; i++) {
+    totalGas += gas[i];
+    totalCost += cost[i];
+  }
+ 
+  if(totalGas < totalCost) return -1;
+  
+  let startIdx = 0;
+  let currentGasAmount = 0;
+  
+  for(let i = 0; i < gas.length; i++) {
+    currentGasAmount += (gas[i] - cost[i]);
+    
+    if(currentGasAmount < 0) {
+      currentGasAmount = 0;
+      startIdx = i + 1;
+    }
+  }
+
+  return startIdx;
+};
+
 class Node {
   constructor(cost, gas, next, index) {
     this.cost = cost;
